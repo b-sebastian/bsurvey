@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% block head_style %}
+		<meta charset="UTF-8" />
+		<title>{% block title %}Welcome!{% endblock %}</title>
+		{% stylesheets
+		'@MopaBootstrapBundle/Resources/public/sass/mopabootstrapbundle-3.2.scss'
+		'@MopaBootstrapBundle/Resources/public/sass/bootstrap-fontawesome.scss'
+		%}
+		<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+		{% endstylesheets %}
+
+		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+	{% block head_script_assetic %}
+		{% javascripts '@SurveyBundle/Resources/jquery-1.11.1.js' %}
+		<script type="text/javascript" src="{{ asset_url }}"></script>
+		{% endjavascripts %}
+	{% endblock head_script_assetic %}
+	{% endblock head_style %}
+</head>
+<body>
+{% block body %}{% endblock %}
+</body>
+</html>

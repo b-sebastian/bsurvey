@@ -1,0 +1,6 @@
+{
+    "require": {
+        "mopa/bootstrap-bundle": "^2.3",
+        "twbs/bootstrap": "^3.3"
+    }
+}
