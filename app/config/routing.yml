@@ -1,3 +1,6 @@
 app:
     resource: "@SurveyBundle/Controller/"
     type:     annotation
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"

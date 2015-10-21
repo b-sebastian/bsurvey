@@ -1,0 +1,68 @@
+{% extends 'MopaBootstrapBundle::base_less.html.twig' %}
+
+{% block body %}
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button> <a class="navbar-brand" href="/">Q&A Survey</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+							<span class="logged-info logged">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
+							<a id="logout" href="{{ path('fos_user_security_logout') }}">
+								<button type="submit" class="btn btn-primary">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</button>
+							</a>
+						{% else %}
+							<a id="login" href="{{ path('fos_user_security_login') }}"><button type="submit" class="btn btn-success">Sign in</button></a>
+						{% endif %}
+
+						{% for type, messages in app.session.flashBag.all %}
+							{% for message in messages %}
+								<div class="{{ type }}">
+									{{ message|trans({}, 'FOSUserBundle') }}
+								</div>
+							{% endfor %}
+						{% endfor %}
+					</li>
+				</ul>
+				<form class="navbar-form navbar-right">
+					<input type="text" class="form-control" placeholder="Search...">
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3 col-md-2 sidebar">
+				<ul class="nav nav-sidebar">
+					<li><a href="{{ path('overview') }}">Overview<br></a></li>
+					<li><a href="{{ path('overview') }}">Friends</a></li>
+				</ul>
+				<ul class="nav nav-sidebar">
+					<li><a href="{{ path('overview') }}">My surveys</a></li>
+					<li><a href="{{ path('overview') }}">Add survey</a></li>
+				</ul>
+				<ul class="nav nav-sidebar">
+					<li><a href="{{ path('overview') }}">My questions</a></li>
+					<li><a href="{{ path('overview') }}">Add question</a></li>
+				</ul>
+			</div>
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+				{% block content %}
+				{% endblock content %}
+			</div>
+		</div>
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			<hr>
+			<footer>
+				&copy; Sebastian Bachorczyk 2015-2016
+			</footer>
+		</div>
+	</div>
+{% endblock body %}

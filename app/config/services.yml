@@ -4,6 +4,10 @@ parameters:
 #    parameter_name: value
 
 services:
+    app.form.registration:
+        class: SurveyBundle\Form\Type\RegistrationType
+        tags:
+            - { name: form.type, alias: registration }
 #    service_name:
 #        class: SurveyBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

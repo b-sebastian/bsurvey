@@ -1,0 +1,53 @@
+{% extends 'MopaBootstrapBundle::base_less.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+							<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+						</button> <a class="navbar-brand" href="/">Q&A Survey</a>
+					</div>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							{% for type, messages in app.session.flashBag.all %}
+								{% for message in messages %}
+									<div class="{{ type }}">
+										{{ message|trans({}, 'FOSUserBundle') }}
+									</div>
+								{% endfor %}
+							{% endfor %}
+
+							{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+								<span class="logged-info">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
+								<a href="{{ path('fos_user_security_logout') }}">
+									<button type="submit" class="btn btn-primary">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</button>
+								</a>
+							{% else %}
+								<a href="{{ path('fos_user_security_login') }}"><button type="submit" class="btn btn-success">Sign in</button></a>
+							{% endif %}
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<div class="col-md-12">
+			{% block body_container %}
+				<div class="jumbotron">
+					{% block body_jumbotron %}
+					{% endblock %}
+					{% block fos_user_content %}
+					{% endblock fos_user_content %}
+				</div>
+				{% block body_rest %}
+				{% endblock %}
+			{% endblock %}
+			</div>
+		</div>
+		<hr>
+		<footer>
+			&copy; Sebastian Bachorczyk 2015-2016
+		</footer>
+	</div>
+{% endblock %}
