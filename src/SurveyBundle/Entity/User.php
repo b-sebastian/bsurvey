@@ -2,6 +2,7 @@
 
 namespace SurveyBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -42,25 +43,104 @@ class User extends BaseUser
 	 */
 	protected $termsAccepted;
 
-	public function getForename()
+	/**
+	 * @ORM\OneToMany(targetEntity="Question", mappedBy="user")
+	 */
+	protected $questions;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="Survey", mappedBy="user")
+	 */
+	protected $surveys;
+
+	public function __construct()
 	{
-		return $this->forename;
+		parent::__construct();
+		$this->questions = new ArrayCollection();
+		$this->surveys = new ArrayCollection();
 	}
 
-	public function setForename($forename)
-	{
-		$this->forename = $forename;
-	}
+    /**
+     * Add question
+     *
+     * @param \SurveyBundle\Entity\Question $question
+     *
+     * @return User
+     */
+    public function addQuestion(\SurveyBundle\Entity\Question $question)
+    {
+        $this->questions[] = $question;
 
-	public function getSurname()
-	{
-		return $this->surname;
-	}
+        return $this;
+    }
 
-	public function setSurname($surname)
-	{
-		$this->surname = $surname;
-	}
+    /**
+     * Remove question
+     *
+     * @param \SurveyBundle\Entity\Question $question
+     */
+    public function removeQuestion(\SurveyBundle\Entity\Question $question)
+    {
+        $this->questions->removeElement($question);
+    }
+
+    /**
+     * Get questions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getQuestions()
+    {
+        return $this->questions;
+    }
+
+    /**
+     * Set forename
+     *
+     * @param string $forename
+     *
+     * @return User
+     */
+    public function setForename($forename)
+    {
+        $this->forename = $forename;
+
+        return $this;
+    }
+
+    /**
+     * Get forename
+     *
+     * @return string
+     */
+    public function getForename()
+    {
+        return $this->forename;
+    }
+
+    /**
+     * Set surname
+     *
+     * @param string $surname
+     *
+     * @return User
+     */
+    public function setSurname($surname)
+    {
+        $this->surname = $surname;
+
+        return $this;
+    }
+
+    /**
+     * Get surname
+     *
+     * @return string
+     */
+    public function getSurname()
+    {
+        return $this->surname;
+    }
 
 	public function getTermsAccepted()
 	{
@@ -71,4 +151,38 @@ class User extends BaseUser
 	{
 		$this->termsAccepted = (bool) $termsAccepted;
 	}
+
+    /**
+     * Add survey
+     *
+     * @param \SurveyBundle\Entity\Survey $survey
+     *
+     * @return User
+     */
+    public function addSurvey(\SurveyBundle\Entity\Survey $survey)
+    {
+        $this->surveys[] = $survey;
+
+        return $this;
+    }
+
+    /**
+     * Remove survey
+     *
+     * @param \SurveyBundle\Entity\Survey $survey
+     */
+    public function removeSurvey(\SurveyBundle\Entity\Survey $survey)
+    {
+        $this->surveys->removeElement($survey);
+    }
+
+    /**
+     * Get surveys
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSurveys()
+    {
+        return $this->surveys;
+    }
 }

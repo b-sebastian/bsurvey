@@ -1,0 +1,10 @@
+{% extends 'SurveyBundle::base_logged.html.twig' %}
+
+{% block content %}
+	{{ form_start(form) }}
+	{{ form_row(form.title) }}
+	{{ form_row(form.description) }}
+	{{ form_row(form.scale) }}
+	{{ form_widget(form.Add, {'label': 'Save'}) }}
+	{{ form_end(form) }}
+{%  endblock content %}

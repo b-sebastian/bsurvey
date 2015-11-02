@@ -39,7 +39,8 @@
 		"knplabs/knp-menu-bundle": "dev-master",
 		"knplabs/knp-menu": "2.1.x-dev",
 		"craue/formflow-bundle": "~2.0",
-		"friendsofsymfony/user-bundle": "~2.0@dev"
+		"friendsofsymfony/user-bundle": "~2.0@dev",
+		"doctrine/doctrine-migrations-bundle": "^1.0"
 	},
 	"require-dev": {
 		"sensio/generator-bundle": "~2.3"

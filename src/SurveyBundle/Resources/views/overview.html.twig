@@ -1,12 +1,8 @@
 {% extends 'SurveyBundle::base_logged.html.twig' %}
 
-{% block head_css %}
-	{% stylesheets
-	'@SurveyBundle/Resources/css/overview.less'
-	%}
-	<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
-	{% endstylesheets %}
-{% endblock %}
+{% block li_overview %}
+	class="active"
+{% endblock li_overview %}
 
 {% block content %}
 	<h1 class="page-header">Dashboard</h1>
