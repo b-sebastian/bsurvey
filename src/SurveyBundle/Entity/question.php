@@ -2,14 +2,15 @@
 
 namespace SurveyBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="SurveyBundle\Entity\SurveyRepository")
- * @ORM\Table(name="surveys")
+ * @ORM\Entity(repositoryClass="SurveyBundle\Entity\QuestionRepository")
+ * @ORM\Table(name="questions")
  */
-class Survey
+class Question
 {
 	/**
 	 * @ORM\Id
@@ -19,7 +20,7 @@ class Survey
 	protected $id;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="User", inversedBy="surveys")
+	 * @ORM\ManyToOne(targetEntity="User", inversedBy="questions")
 	 * @ORM\JoinColumn(referencedColumnName="id")
 	 */
 	protected $user;
@@ -30,14 +31,20 @@ class Survey
 	protected $description;
 
 	/**
-	 * @ORM\Column(type="string", length=255)
+	 * @ORM\Column(type="string", length=50)
 	 */
 	protected $title;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="Question", inversedBy="surveys")
+	 * @ORM\ManyToOne(targetEntity="Scale", inversedBy="questions")
+	 * @ORM\JoinColumn(name="scale_id", referencedColumnName="id")
 	 */
-	protected $questions;
+	protected $scale;
+
+	/**
+	 * @ORM\ManyToMany(targetEntity="Survey", mappedBy="questions")
+	 */
+	protected $surveys;
 
 	/**
 	 * @ORM\Column(type="datetime")
@@ -49,23 +56,12 @@ class Survey
 	 */
 	protected $deleted = false;
 
-	/**
-	 * @ORM\ManyToOne(targetEntity="SurveyType", inversedBy="surveys")
-	 * @ORM\JoinColumn(referencedColumnName="id")
-	 */
-	protected $surveyType;
-
-	/**
-	 * @ORM\OneToMany(targetEntity="SurveyUrl", mappedBy="survey")
-	 */
-	protected $surveyUrls;
-
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->questions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->surveys = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -83,7 +79,7 @@ class Survey
      *
      * @param string $description
      *
-     * @return Survey
+     * @return Question
      */
     public function setDescription($description)
     {
@@ -107,7 +103,7 @@ class Survey
      *
      * @param string $title
      *
-     * @return Survey
+     * @return Question
      */
     public function setTitle($title)
     {
@@ -131,7 +127,7 @@ class Survey
      *
      * @param \DateTime $date
      *
-     * @return Survey
+     * @return Question
      */
     public function setDate($date)
     {
@@ -155,11 +151,16 @@ class Survey
      *
      * @param boolean $deleted
      *
-     * @return Survey
+     * @return Question
      */
     public function setDeleted($deleted)
     {
         $this->deleted = $deleted;
+
+		foreach ($this->surveys as $survey)
+		{
+			$survey->removeQuestion($this);
+		}
 
         return $this;
     }
@@ -179,7 +180,7 @@ class Survey
      *
      * @param \SurveyBundle\Entity\User $user
      *
-     * @return Survey
+     * @return Question
      */
     public function setUser(\SurveyBundle\Entity\User $user = null)
     {
@@ -199,94 +200,62 @@ class Survey
     }
 
     /**
-     * Add question
+     * Set scale
      *
-     * @param \SurveyBundle\Entity\Question $question
+     * @param \SurveyBundle\Entity\Scale $scale
      *
-     * @return Survey
+     * @return Question
      */
-    public function addQuestion(\SurveyBundle\Entity\Question $question)
+    public function setScale(\SurveyBundle\Entity\Scale $scale = null)
     {
-        $this->questions[] = $question;
+        $this->scale = $scale;
 
         return $this;
     }
 
     /**
-     * Remove question
+     * Get scale
      *
-     * @param \SurveyBundle\Entity\Question $question
+     * @return \SurveyBundle\Entity\Scale
      */
-    public function removeQuestion(\SurveyBundle\Entity\Question $question)
+    public function getScale()
     {
-        $this->questions->removeElement($question);
+        return $this->scale;
     }
 
     /**
-     * Get questions
+     * Add survey
+     *
+     * @param \SurveyBundle\Entity\Survey $survey
+     *
+     * @return Question
+     */
+    public function addSurvey(\SurveyBundle\Entity\Survey $survey)
+    {
+        $this->surveys[] = $survey;
+		$survey->addQuestion($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove survey
+     *
+     * @param \SurveyBundle\Entity\Survey $survey
+     */
+    public function removeSurvey(\SurveyBundle\Entity\Survey $survey)
+    {
+        $this->surveys->removeElement($survey);
+		$survey->removeQuestion($this);
+    }
+
+    /**
+     * Get surveys
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getQuestions()
+    public function getSurveys()
     {
-        return $this->questions;
-    }
-
-    /**
-     * Set surveyType
-     *
-     * @param \SurveyBundle\Entity\SurveyType $surveyType
-     *
-     * @return Survey
-     */
-    public function setSurveyType(\SurveyBundle\Entity\SurveyType $surveyType = null)
-    {
-        $this->surveyType = $surveyType;
-
-        return $this;
-    }
-
-    /**
-     * Get surveyType
-     *
-     * @return \SurveyBundle\Entity\SurveyType
-     */
-    public function getSurveyType()
-    {
-        return $this->surveyType;
-    }
-
-    /**
-     * Add surveyUrl
-     *
-     * @param \SurveyBundle\Entity\SurveyUrl $surveyUrl
-     *
-     * @return Survey
-     */
-    public function addSurveyUrl(\SurveyBundle\Entity\SurveyUrl $surveyUrl)
-    {
-        $this->surveyUrls[] = $surveyUrl;
-
-        return $this;
-    }
-
-    /**
-     * Remove surveyUrl
-     *
-     * @param \SurveyBundle\Entity\SurveyUrl $surveyUrl
-     */
-    public function removeSurveyUrl(\SurveyBundle\Entity\SurveyUrl $surveyUrl)
-    {
-        $this->surveyUrls->removeElement($surveyUrl);
-    }
-
-    /**
-     * Get surveyUrls
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSurveyUrls()
-    {
-        return $this->surveyUrls;
+        return $this->surveys;
     }
 }

@@ -7,6 +7,7 @@ use SurveyBundle\Entity\Question;
 use SurveyBundle\Form\Type\QuestionType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class QuestionsController extends Controller
 {
@@ -64,6 +65,10 @@ class QuestionsController extends Controller
 		$manager = $this->getDoctrine()->getManager();
 
 		$question = $manager->getRepository('SurveyBundle:Question')->find($id);
+
+		if ($question->getUser() != $this->getUser())
+			throw new AccessDeniedException;
+
 		$form = $this->createForm(new QuestionType(), $question);
 
 		if ($request->isMethod('POST')) {
@@ -89,20 +94,19 @@ class QuestionsController extends Controller
 	 */
 	public function deleteQuestion(Request $request, $id)
 	{
-		$sd = 0;
 		$manager = $this->getDoctrine()->getManager();
 		$question = $manager->getRepository('SurveyBundle:Question')->find($id);
 
-		if ($question->getUser() == $this->getUser()) {
-			$question->setDeleted(true);
+		if ($question->getUser() != $this->getUser())
+			throw new AccessDeniedException();
 
-			$manager->persist($question);
-			$manager->flush();
-			$sd = 1;
-		}
+		$question->setDeleted(true);
+
+		$manager->persist($question);
+		$manager->flush();
 
 		return $this->redirect($this->generateUrl('questions', array(
-			'sd' => $sd
+			'sd' => 1
 		)));
 	}
 }

@@ -55,8 +55,8 @@
 					<li {% block li_friends %}{% endblock %}><a href="{{ path('overview') }}">Friends</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li {% block li_survey %}{% endblock %}><a href="{{ path('overview') }}">My surveys</a></li>
-					<li {% block li_survey_add %}{% endblock %}><a href="{{ path('overview') }}">Add survey</a></li>
+					<li {% block li_survey %}{% endblock %}><a href="{{ path('surveys') }}">My surveys</a></li>
+					<li {% block li_survey_add %}{% endblock %}><a href="{{ path('survey_add') }}">Add survey</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
 					<li {% block li_questions %}{% endblock %}><a href="{{ path('questions') }}">My questions</a></li>
@@ -73,6 +73,22 @@
 			<footer>
 				&copy; Sebastian Bachorczyk 2015-2016
 			</footer>
+		</div>
+		<div class="modal fade" id="myDeleteModal">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Delete?</h4>
+					</div>
+					<div class="modal-body">
+						<p>Are you sure?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
+						<button type="button" data-dismiss="modal" class="btn">Cancel</button>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 {% endblock body %}

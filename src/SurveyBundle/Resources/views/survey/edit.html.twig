@@ -1,0 +1,95 @@
+{% extends 'SurveyBundle:survey:add.html.twig' %}
+
+{% block li_survey_add %}
+{% endblock li_survey_add %}
+
+{% block beforeForm %}
+	<div class="text-right survey-activation">
+		<h4>Survey Activation:</h4>
+		<div class="btn-group btn-toggle" id="survey-activation-toggle">
+			<button class="btn btn-default" name="online">Online</button>
+			<button class="btn btn-primary" name="offline">Offline</button>
+		</div>
+		<div id="survey-activation-control">
+			<label for="survey-activation-input" class="survey-activation-label">Survey URL: </label>
+			<input type="text" name="surveyUrl" class="form-control survey-activation-input" title="surveyUrl">
+		</div>
+	</div>
+	<hr>
+	<h4>Survey Edit:</h4>
+{% endblock beforeForm %}
+
+{% block form_submit %}
+	{{ form_widget(form.Add, {'label': 'Save'}) }}
+{% endblock form_submit %}
+
+{% block extend_javascript %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			checkSurveyUrl();
+
+			$('.btn-toggle').click(function() {
+				$(this).find('.btn').prop("disabled", true);
+
+				if ($(this).find('.btn-primary').size()>0) {
+					$(this).find('.btn').toggleClass('btn-primary');
+					$(this).find('.btn').toggleClass('btn-default');
+				}
+
+				if ($('[name="offline"]').hasClass('btn-primary'))
+				{
+					turnOffSurveyUrl();
+					return 0;
+				}
+
+				getSurveyUrl();
+			});
+		});
+
+		function checkSurveyUrl(){
+			$.post('{{path('ajax_survey_url_check')}}',
+					{id: {{ app.request.get('id') }} },
+					function(response){
+						if(response.url != ""){
+							fillSurveyUrl(response.url);
+							$('#survey-activation-control').show();
+							var toggle = $('.btn-toggle');
+							toggle.find('.btn').toggleClass('btn-primary');
+							toggle.find('.btn').toggleClass('btn-default');
+							$('[name="sb_survey"] :input').prop("disabled", true);
+						}
+					}, "json");
+		}
+
+		function getSurveyUrl(){
+			$.post('{{path('ajax_survey_url')}}',
+					{id: {{ app.request.get('id') }} },
+					function(response){
+						if(response.url != ""){//dummy check
+							fillSurveyUrl(response.url);
+							$('#survey-activation-control').show();
+							$('.btn-toggle').find('.btn').prop("disabled", false);
+							$('[name="sb_survey"] :input').prop("disabled", true);
+						}
+					}, "json");
+		}
+
+		function fillSurveyUrl(url) {
+			$('input[name="surveyUrl"]').val(url);
+		}
+
+		function turnOffSurveyUrl(){
+			$.post('{{path('ajax_survey_url_off')}}',
+					{id: {{ app.request.get('id') }} },
+					function(response){
+						if(response.url != ""){//dummy check
+							fillSurveyUrl(response.url);
+							$('input[name="surveyUrl"]').val("");
+							$('#survey-activation-control').hide();
+							$('.btn-toggle').find('.btn').prop("disabled", false);
+							$('[name="sb_survey"] :input').prop("disabled", false);
+						}
+					}, "json");
+		}
+	</script>
+{% endblock extend_javascript %}

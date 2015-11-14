@@ -32,3 +32,6 @@ security:
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/overview, role: ROLE_USER }
         - { path: ^/questions, role: ROLE_USER }
+        - { path: ^/surveys, role: ROLE_USER }
+        - { path: ^/survey, role: ROLE_USER }
+        - { path: ^/survey/show/, role: IS_AUTHENTICATED_ANONYMOUSLY }
