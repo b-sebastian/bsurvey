@@ -56,9 +56,9 @@ class Survey
 	protected $surveyType;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="SurveyUrl", mappedBy="survey")
+	 * @ORM\OneToMany(targetEntity="Session", mappedBy="survey")
 	 */
-	protected $surveyUrls;
+	protected $sessions;
 
     /**
      * Constructor
@@ -256,37 +256,38 @@ class Survey
         return $this->surveyType;
     }
 
+
     /**
-     * Add surveyUrl
+     * Add session
      *
-     * @param \SurveyBundle\Entity\SurveyUrl $surveyUrl
+     * @param \SurveyBundle\Entity\Session $session
      *
      * @return Survey
      */
-    public function addSurveyUrl(\SurveyBundle\Entity\SurveyUrl $surveyUrl)
+    public function addSession(\SurveyBundle\Entity\Session $session)
     {
-        $this->surveyUrls[] = $surveyUrl;
+        $this->sessions[] = $session;
 
         return $this;
     }
 
     /**
-     * Remove surveyUrl
+     * Remove session
      *
-     * @param \SurveyBundle\Entity\SurveyUrl $surveyUrl
+     * @param \SurveyBundle\Entity\Session $session
      */
-    public function removeSurveyUrl(\SurveyBundle\Entity\SurveyUrl $surveyUrl)
+    public function removeSession(\SurveyBundle\Entity\Session $session)
     {
-        $this->surveyUrls->removeElement($surveyUrl);
+        $this->sessions->removeElement($session);
     }
 
     /**
-     * Get surveyUrls
+     * Get sessions
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getSurveyUrls()
+    public function getSessions()
     {
-        return $this->surveyUrls;
+        return $this->sessions;
     }
 }

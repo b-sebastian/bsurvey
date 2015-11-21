@@ -4,7 +4,7 @@ namespace SurveyBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use SurveyBundle\Entity\Survey;
-use SurveyBundle\Entity\SurveyUrl;
+use SurveyBundle\Entity\Session;
 use SurveyBundle\Form\Type\SurveyType;
 use SurveyBundle\Service\RandomString;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -123,15 +123,15 @@ class SurveysController extends Controller
 		$manager = $this->getDoctrine()->getManager();
 		$id = $request->request->get('id');
 
-		$surveyUrl = $manager->getRepository('SurveyBundle:Survey')->find($id)->getSurveyUrls()->last();
+		$session = $manager->getRepository('SurveyBundle:Survey')->find($id)->getSessions()->last();
 
-		if( !is_a($surveyUrl, 'SurveyUrl') || !$surveyUrl->getActive())
+		if( !is_a($session, 'SurveyBundle\Entity\Session') || !$session->getActive())
 		{
 			$data = array('url' => "");
 			return new Response(json_encode($data),200);
 		}
 
-		$data = array('url' => $newUrlForSurvey = $request->getScheme().'://'.$request->getHttpHost().$this->generateUrl('survey_show', array('url' => $surveyUrl->getUrl())));
+		$data = array('url' => $request->getScheme().'://'.$request->getHttpHost().$this->generateUrl('survey_show', array('url' => $session->getUrl())));
 
 		return new Response(json_encode($data),200);
 	}
@@ -147,7 +147,7 @@ class SurveysController extends Controller
 		$randomString = RandomString::generate(20);
 		$newUrlForSurvey = $request->getScheme().'://'.$request->getHttpHost().$this->generateUrl('survey_show', array('url' => $randomString));
 
-		$url = new SurveyUrl();
+		$url = new Session();
 		$url->setSurvey($survey);
 		$url->setFromDate(new \DateTime());
 		$url->setActive(true);
@@ -171,11 +171,11 @@ class SurveysController extends Controller
 		$manager = $this->getDoctrine()->getManager();
 		$id = $request->request->get('id');
 
-		$surveyUrl = $manager->getRepository('SurveyBundle:Survey')->find($id)->getSurveyUrls()->last();
-		$surveyUrl->setActive(false);
-		$surveyUrl->setToDate(new \DateTime());
+		$session = $manager->getRepository('SurveyBundle:Survey')->find($id)->getSessions()->last();
+		$session->setActive(false);
+		$session->setToDate(new \DateTime());
 
-		$manager->persist($surveyUrl);
+		$manager->persist($session);
 		$manager->flush();
 
 		$data = array(

@@ -1,0 +1,56 @@
+{% extends app.user ? 'SurveyBundle::base_logged.html.twig' : 'SurveyBundle::base.html.twig' %}
+
+{% form_theme form _self %}
+
+{% block page_css %}
+	{% stylesheets
+	 '@SurveyBundle/Resources/css/session.less'
+	%}
+	<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+	{% endstylesheets %}
+{% endblock page_css %}
+
+{% block body_jumbotron %}
+	{{ block('content')  }}
+{% endblock body_jumbotron  %}
+
+{% block textarea_widget %}
+	<div class="radio-span-description">
+		{{ form.parent.vars.data.question.description }}
+	</div>
+	<div>
+		<textarea id="{{ form.vars.id }}" name="{{ form.vars.full_name }}" required rows="{{ form.vars.attr.rows }}" class="form-control" >{{ form.vars.data }}</textarea>
+	</div>
+{% endblock textarea_widget %}
+
+{% block choice_widget %}
+	<div class="radio-span-description">
+		{{ form.parent.vars.data.question.description }}
+	</div>
+	<div id="{{ form.vars.id }}">
+		<span class="choice-span-label">{{ form.parent.vars.data.question.scale.leftLabel }}</span>
+		{% for input in form %}
+			<label class="radio-inline">
+				<input type="radio" id="{{ input.vars.id }}" name="{{ input.vars.full_name }}" value="{{ input.vars.value }}" required="required" {% if input.vars.data == true %} checked {% endif %}>
+				<span class="radio-span">{{ input.vars.label }}</span>
+			</label>
+		{% endfor %}
+		<span class="choice-span-label">{{ form.parent.vars.data.question.scale.rightLabel }}</span>
+	</div>
+{% endblock choice_widget %}
+
+
+{% block content %}
+	{% if app.request.get('ss') == 1 %}
+		<div class="alert alert-success" role="alert" style="font-weight: bold;">Thank you for submitting this survey! :)</div>
+	{% elseif app.request.get('se') == 1 %}
+		<div class="alert alert-danger" role="alert" style="font-weight: bold;">You can not answer for this survey anymore.</div>
+	{% else %}
+		<h2>{{ form.vars.data.survey.title }}</h2>
+		<h4>{{ form.vars.data.survey.description }}</h4>
+
+		{{ form_start(form) }}
+		{{ form_widget(form) }}
+		{{ form_end(form) }}
+	{% endif %}
+{%  endblock content %}

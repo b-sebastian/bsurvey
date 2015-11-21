@@ -8,9 +8,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="surveys_urls")
+ * @ORM\Table(name="sessions")
  */
-class SurveyUrl
+class Session
 {
 	/**
 	 * @ORM\Id
@@ -20,7 +20,7 @@ class SurveyUrl
 	protected $id;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Survey", inversedBy="surveyUrls")
+	 * @ORM\ManyToOne(targetEntity="Survey", inversedBy="sessions")
 	 * @ORM\JoinColumn(name="survey_id", referencedColumnName="id")
 	 */
 	protected $survey;
@@ -46,6 +46,11 @@ class SurveyUrl
 	 */
 	protected $active;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="Answer", mappedBy="session", cascade={"persist"})
+	 */
+	protected $answers;
+
     /**
      * Get id
      *
@@ -61,7 +66,7 @@ class SurveyUrl
      *
      * @param string $url
      *
-     * @return SurveyUrl
+     * @return Session
      */
     public function setUrl($url)
     {
@@ -81,59 +86,11 @@ class SurveyUrl
     }
 
     /**
-     * Set active
-     *
-     * @param boolean $active
-     *
-     * @return SurveyUrl
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
-
-        return $this;
-    }
-
-    /**
-     * Get active
-     *
-     * @return boolean
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * Set survey
-     *
-     * @param \SurveyBundle\Entity\Survey $survey
-     *
-     * @return SurveyUrl
-     */
-    public function setSurvey(\SurveyBundle\Entity\Survey $survey = null)
-    {
-        $this->survey = $survey;
-
-        return $this;
-    }
-
-    /**
-     * Get survey
-     *
-     * @return \SurveyBundle\Entity\Survey
-     */
-    public function getSurvey()
-    {
-        return $this->survey;
-    }
-
-    /**
      * Set fromDate
      *
      * @param \DateTime $fromDate
      *
-     * @return SurveyUrl
+     * @return Session
      */
     public function setFromDate($fromDate)
     {
@@ -157,7 +114,7 @@ class SurveyUrl
      *
      * @param \DateTime $toDate
      *
-     * @return SurveyUrl
+     * @return Session
      */
     public function setToDate($toDate)
     {
@@ -174,5 +131,94 @@ class SurveyUrl
     public function getToDate()
     {
         return $this->toDate;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     *
+     * @return Session
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * Set survey
+     *
+     * @param \SurveyBundle\Entity\Survey $survey
+     *
+     * @return Session
+     */
+    public function setSurvey(\SurveyBundle\Entity\Survey $survey = null)
+    {
+        $this->survey = $survey;
+
+        return $this;
+    }
+
+    /**
+     * Get survey
+     *
+     * @return \SurveyBundle\Entity\Survey
+     */
+    public function getSurvey()
+    {
+        return $this->survey;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add answer
+     *
+     * @param \SurveyBundle\Entity\Answer $answer
+     *
+     * @return Session
+     */
+    public function addAnswer(\SurveyBundle\Entity\Answer $answer)
+    {
+        $this->answers[] = $answer;
+
+        return $this;
+    }
+
+    /**
+     * Remove answer
+     *
+     * @param \SurveyBundle\Entity\Answer $answer
+     */
+    public function removeAnswer(\SurveyBundle\Entity\Answer $answer)
+    {
+        $this->answers->removeElement($answer);
+    }
+
+    /**
+     * Get answers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAnswers()
+    {
+        return $this->answers;
     }
 }

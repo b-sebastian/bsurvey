@@ -53,6 +53,11 @@ class User extends BaseUser
 	 */
 	protected $surveys;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="Answer", mappedBy="user")
+	 */
+	protected $answers;
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -184,5 +189,39 @@ class User extends BaseUser
     public function getSurveys()
     {
         return $this->surveys;
+    }
+
+    /**
+     * Add answer
+     *
+     * @param \SurveyBundle\Entity\Answer $answer
+     *
+     * @return User
+     */
+    public function addAnswer(\SurveyBundle\Entity\Answer $answer)
+    {
+        $this->answers[] = $answer;
+
+        return $this;
+    }
+
+    /**
+     * Remove answer
+     *
+     * @param \SurveyBundle\Entity\Answer $answer
+     */
+    public function removeAnswer(\SurveyBundle\Entity\Answer $answer)
+    {
+        $this->answers->removeElement($answer);
+    }
+
+    /**
+     * Get answers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAnswers()
+    {
+        return $this->answers;
     }
 }

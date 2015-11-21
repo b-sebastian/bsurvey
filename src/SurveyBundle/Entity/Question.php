@@ -56,6 +56,11 @@ class Question
 	 */
 	protected $deleted = false;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="Answer", mappedBy="question")
+	 */
+	protected $answers;
+
     /**
      * Constructor
      */
@@ -257,5 +262,39 @@ class Question
     public function getSurveys()
     {
         return $this->surveys;
+    }
+
+    /**
+     * Add answer
+     *
+     * @param \SurveyBundle\Entity\Answer $answer
+     *
+     * @return Question
+     */
+    public function addAnswer(\SurveyBundle\Entity\Answer $answer)
+    {
+        $this->answers[] = $answer;
+
+        return $this;
+    }
+
+    /**
+     * Remove answer
+     *
+     * @param \SurveyBundle\Entity\Answer $answer
+     */
+    public function removeAnswer(\SurveyBundle\Entity\Answer $answer)
+    {
+        $this->answers->removeElement($answer);
+    }
+
+    /**
+     * Get answers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAnswers()
+    {
+        return $this->answers;
     }
 }

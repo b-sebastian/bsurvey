@@ -1,5 +1,10 @@
 {% extends 'MopaBootstrapBundle::base_less.html.twig' %}
 
+{% block head_css %}
+	{%  block page_css %}
+	{% endblock page_css %}
+{% endblock %}
+
 {% block body %}
 	<div class="container">
 		<div class="row">
