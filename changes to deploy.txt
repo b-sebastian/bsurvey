@@ -1,0 +1,22 @@
+zmienic title w vendor/mopa/bootstrap-bundle/Mopa/Bundle/BootstrapBundle/Resources/views/base.html.twig
+
+dodac block "head_css" w vendor/mopa/bootstrap-bundle/Mopa/Bundle/BootstrapBundle/Resources/views/base_less.html.twig
+oraz style : '@SurveyBundle/Resources/css//base.less'
+
+zmienic na domyslny kod w web/app.php
+
+pozmieniac cos zeby wyswietlala sie strona jakos bsurvey.dev a nie bsurvey.dev/web
+
+zainstalowac na serwerze:
+	nodejs
+	npm
+	less
+
+komendy!
+	composer update
+	rm-rf app/cache/*
+	php app/console assetic:dump
+	php app/console assetic:watch
+	php app/console doctrine:migrations:migrate [filename bez rozszerzenia -- czyli jakas dluga liczba z "data" na poczatku]
+	php app/console doctrine:schema:update
+	php app/console doctrine:generate:entities SurveyBundle

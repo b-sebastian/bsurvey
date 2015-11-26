@@ -1,0 +1,8 @@
+{% extends 'SurveyBundle::base_logged.html.twig' %}
+
+{% block content %}
+	{{ form_errors(form) }}
+	{{ form_start(form) }}
+	{{ form_widget(form) }}
+	{{ form_end(form) }}
+{%  endblock content %}

@@ -29,6 +29,12 @@ class Session
 	 * @ORM\Column(type="string")
 	 * @Assert\NotNull()
 	 */
+	protected $name;
+
+	/**
+	 * @ORM\Column(type="string")
+	 * @Assert\NotNull()
+	 */
 	protected $url;
 
 	/**
@@ -220,5 +226,29 @@ class Session
     public function getAnswers()
     {
         return $this->answers;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Session
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

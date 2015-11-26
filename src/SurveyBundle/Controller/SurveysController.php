@@ -148,6 +148,7 @@ class SurveysController extends Controller
 		$newUrlForSurvey = $request->getScheme().'://'.$request->getHttpHost().$this->generateUrl('survey_show', array('url' => $randomString));
 
 		$url = new Session();
+		$url->setName($randomString);
 		$url->setSurvey($survey);
 		$url->setFromDate(new \DateTime());
 		$url->setActive(true);

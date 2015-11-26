@@ -1,6 +1,8 @@
 {% extends app.user ? 'SurveyBundle::base_logged.html.twig' : 'SurveyBundle::base.html.twig' %}
 
-{% form_theme form _self %}
+{% if form is defined %}
+	{% form_theme form _self %}
+{% endif %}
 
 {% block page_css %}
 	{% stylesheets
@@ -45,7 +47,13 @@
 		<div class="alert alert-success" role="alert" style="font-weight: bold;">Thank you for submitting this survey! :)</div>
 	{% elseif app.request.get('se') == 1 %}
 		<div class="alert alert-danger" role="alert" style="font-weight: bold;">You can not answer for this survey anymore.</div>
-	{% else %}
+	{% elseif form is not defined %}
+		<div class="alert alert-warning" role="alert" style="font-weight: bold;">
+			{% if not_found is defined %} {{ not_found }}{% endif %}
+			{% if closed is defined %} {{ closed }}{% endif %}
+			{% if notAvailable is defined %} {{ notAvailable }}{% endif %}
+		</div>
+	{% elseif form is defined %}
 		<h2>{{ form.vars.data.survey.title }}</h2>
 		<h4>{{ form.vars.data.survey.description }}</h4>
 

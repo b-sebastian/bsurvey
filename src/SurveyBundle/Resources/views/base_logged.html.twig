@@ -53,11 +53,11 @@
 				<ul class="nav nav-sidebar">
 					<li {% block li_overview %}{% endblock %}><a href="{{ path('overview') }}">Overview<br></a></li>
 					<li {% block li_friends %}{% endblock %}><a href="{{ path('overview') }}">Friends</a></li>
+					<li {% block li_results %}{% endblock %}><a href="{{ path('results') }}">Results</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
 					<li {% block li_survey %}{% endblock %}><a href="{{ path('surveys') }}">My surveys</a></li>
 					<li {% block li_survey_add %}{% endblock %}><a href="{{ path('survey_add') }}">Add survey</a></li>
-					<li {% block li_filled %}{% endblock %}><a href="#">Filled</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
 					<li {% block li_questions %}{% endblock %}><a href="{{ path('questions') }}">My questions</a></li>

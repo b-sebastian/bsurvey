@@ -33,5 +33,7 @@ security:
         - { path: ^/overview, role: ROLE_USER }
         - { path: ^/questions, role: ROLE_USER }
         - { path: ^/surveys, role: ROLE_USER }
-        - { path: ^/survey/show/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/survey, role: ROLE_USER }
+        - { path: ^/results, role: ROLE_USER }
+        - { path: ^/session, role: ROLE_USER }
+        - { path: ^/session/show/, role: IS_AUTHENTICATED_ANONYMOUSLY }

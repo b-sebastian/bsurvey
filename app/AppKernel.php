@@ -19,7 +19,8 @@ class AppKernel extends Kernel
             new SurveyBundle\SurveyBundle(),
 			new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
 			new FOS\UserBundle\FOSUserBundle(),
-			new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle()
+			new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+			new Ob\HighchartsBundle\ObHighchartsBundle()
 		);
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
