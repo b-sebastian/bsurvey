@@ -42,10 +42,10 @@
 				<td>{{ session.name }}</td>
 				<td>{{ session.survey.title }}</td>
 				<td>{{ session.survey.surveyType.name }}</td>
-				<td>{{ session.survey.questions.count }}</td>
+				<td>{{ session.questions.count }}</td>
 				<td>{{ session.fromDate.format('Y-m-d H:i:s') }}</td>
 				<td>{{ session.active ? 'Yes' : 'No' }}</td>
-				<td>{{ session.survey.questions.count == 0 ? 0 : session.answers.count/session.survey.questions.count }}</td>
+				<td>{{ session.questions.count == 0 ? 0 : session.answers.count/session.questions.count }}</td>
 				<td class="text-center">
 					<a href="{{ path('session_edit', {'id': session.id}) }}">
 						<button type="button" class="btn btn-primary btn-xs">

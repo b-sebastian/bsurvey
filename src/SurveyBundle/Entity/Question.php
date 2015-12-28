@@ -61,6 +61,11 @@ class Question
 	 */
 	protected $answers;
 
+	/**
+	 * @ORM\ManyToMany(targetEntity="Session", mappedBy="questions")
+	 */
+	protected $sessions;
+
     /**
      * Constructor
      */
@@ -296,5 +301,39 @@ class Question
     public function getAnswers()
     {
         return $this->answers;
+    }
+
+    /**
+     * Add session
+     *
+     * @param \SurveyBundle\Entity\Session $session
+     *
+     * @return Question
+     */
+    public function addSession(\SurveyBundle\Entity\Session $session)
+    {
+        $this->sessions[] = $session;
+
+        return $this;
+    }
+
+    /**
+     * Remove session
+     *
+     * @param \SurveyBundle\Entity\Session $session
+     */
+    public function removeSession(\SurveyBundle\Entity\Session $session)
+    {
+        $this->sessions->removeElement($session);
+    }
+
+    /**
+     * Get sessions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSessions()
+    {
+        return $this->sessions;
     }
 }

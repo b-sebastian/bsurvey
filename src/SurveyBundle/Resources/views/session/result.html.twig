@@ -30,9 +30,11 @@
 				</thead>
 				<tbody>
 				{% for answer in question.answers %}
-					<tr>
-						<td>{{ answer.answer }}</td>
-					</tr>
+					{% if answer.session.id == session.id %}
+						<tr>
+							<td>{{ answer.answer }}</td>
+						</tr>
+					{% endif %}
 				{% endfor %}
 				</tbody>
 			</table>

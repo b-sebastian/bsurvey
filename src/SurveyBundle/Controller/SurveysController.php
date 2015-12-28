@@ -154,6 +154,10 @@ class SurveysController extends Controller
 		$url->setActive(true);
 		$url->setUrl($randomString);
 
+		foreach ($survey->getQuestions() as $question) {
+			$url->addQuestion($question);
+		}
+
 		$manager->persist($url);
 		$manager->flush();
 

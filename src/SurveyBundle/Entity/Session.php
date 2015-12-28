@@ -57,6 +57,11 @@ class Session
 	 */
 	protected $answers;
 
+	/**
+	 * @ORM\ManyToMany(targetEntity="Question", inversedBy="sessions")
+	 */
+	protected $questions;
+
     /**
      * Get id
      *
@@ -250,5 +255,39 @@ class Session
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Add question
+     *
+     * @param \SurveyBundle\Entity\Question $question
+     *
+     * @return Session
+     */
+    public function addQuestion(\SurveyBundle\Entity\Question $question)
+    {
+        $this->questions[] = $question;
+
+        return $this;
+    }
+
+    /**
+     * Remove question
+     *
+     * @param \SurveyBundle\Entity\Question $question
+     */
+    public function removeQuestion(\SurveyBundle\Entity\Question $question)
+    {
+        $this->questions->removeElement($question);
+    }
+
+    /**
+     * Get questions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getQuestions()
+    {
+        return $this->questions;
     }
 }

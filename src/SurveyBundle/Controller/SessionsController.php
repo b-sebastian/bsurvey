@@ -51,7 +51,7 @@ class SessionsController extends Controller
 			}
 		}
 
-		$questions = $survey->getQuestions();
+		$questions = $session->getQuestions();
 		$session->getAnswers()->clear();
 
 		foreach ($questions as $question)
@@ -98,7 +98,7 @@ class SessionsController extends Controller
 	public function resultAction(Request $request, Session $session)
 	{
 		$manager = $this->getDoctrine()->getManager();
-		$questions = $session->getSurvey()->getQuestions();
+		$questions = $session->getQuestions();
 		$radios = array();
 		$texts = array();
 
