@@ -1,5 +1,13 @@
 {% extends 'SurveyBundle::base_logged.html.twig' %}
 
+{% block page_css %}
+	{% stylesheets
+	'@SurveyBundle/Resources/css/overview.less'
+	%}
+	<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+	{% endstylesheets %}
+{% endblock page_css %}
+
 {% block li_overview %}
 	class="active"
 {% endblock li_overview %}
@@ -8,154 +16,74 @@
 	<h1 class="page-header">Dashboard</h1>
 
 	<div class="row placeholders">
-		<div class="col-xs-6 col-sm-3 placeholder">
-			<img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-			<h4>Label</h4>
-			<span class="text-muted">Something else</span>
+		<div class="col-xs-6 col-sm-4 placeholder" id="thumb-left">
+			<div>
+				<span class="glyphicon glyphicon-folder-open"></span>
+				<span class="value">{{ thumbs.survey_count }}</span>
+			</div>
+			<h4>Surveys</h4>
 		</div>
-		<div class="col-xs-6 col-sm-3 placeholder">
-			<img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-			<h4>Label</h4>
-			<span class="text-muted">Something else</span>
+		<div class="col-xs-6 col-sm-4 placeholder" id="thumb-center">
+			<div>
+				<span class="glyphicon glyphicon-pencil"></span>
+				<span class="user">{% if thumbs.last_answer.user is defined %}{{ thumbs.last_answer.user.forename ~ " " ~ thumbs.last_answer.user.surname }}{% else %}Gość{% endif %}</span><br>
+				<span class="value">{{ thumbs.last_answer.session.name }}</span>
+			</div>
+			<h4>Last answer</h4>
 		</div>
-		<div class="col-xs-6 col-sm-3 placeholder">
-			<img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-			<h4>Label</h4>
-			<span class="text-muted">Something else</span>
-		</div>
-		<div class="col-xs-6 col-sm-3 placeholder">
-			<img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-			<h4>Label</h4>
-			<span class="text-muted">Something else</span>
+		<div class="col-xs-6 col-sm-4 placeholder" id="thumb-right">
+			<div>
+				<span class="glyphicon glyphicon-comment"></span>
+				<span class="value">{{ thumbs.session_count }}</span>
+			</div>
+			<h4>Sessions</h4>
 		</div>
 	</div>
 
-	<h2 class="sub-header">Section title</h2>
-	<div class="table-responsive">
-		<table class="table table-striped">
-			<thead>
-			<tr>
-				<th>#</th>
-				<th>Header</th>
-				<th>Header</th>
-				<th>Header</th>
-				<th>Header</th>
-			</tr>
-			</thead>
-			<tbody>
-			<tr>
-				<td>1,001</td>
-				<td>Lorem</td>
-				<td>ipsum</td>
-				<td>dolor</td>
-				<td>sit</td>
-			</tr>
-			<tr>
-				<td>1,002</td>
-				<td>amet</td>
-				<td>consectetur</td>
-				<td>adipiscing</td>
-				<td>elit</td>
-			</tr>
-			<tr>
-				<td>1,003</td>
-				<td>Integer</td>
-				<td>nec</td>
-				<td>odio</td>
-				<td>Praesent</td>
-			</tr>
-			<tr>
-				<td>1,003</td>
-				<td>libero</td>
-				<td>Sed</td>
-				<td>cursus</td>
-				<td>ante</td>
-			</tr>
-			<tr>
-				<td>1,004</td>
-				<td>dapibus</td>
-				<td>diam</td>
-				<td>Sed</td>
-				<td>nisi</td>
-			</tr>
-			<tr>
-				<td>1,005</td>
-				<td>Nulla</td>
-				<td>quis</td>
-				<td>sem</td>
-				<td>at</td>
-			</tr>
-			<tr>
-				<td>1,006</td>
-				<td>nibh</td>
-				<td>elementum</td>
-				<td>imperdiet</td>
-				<td>Duis</td>
-			</tr>
-			<tr>
-				<td>1,007</td>
-				<td>sagittis</td>
-				<td>ipsum</td>
-				<td>Praesent</td>
-				<td>mauris</td>
-			</tr>
-			<tr>
-				<td>1,008</td>
-				<td>Fusce</td>
-				<td>nec</td>
-				<td>tellus</td>
-				<td>sed</td>
-			</tr>
-			<tr>
-				<td>1,009</td>
-				<td>augue</td>
-				<td>semper</td>
-				<td>porta</td>
-				<td>Mauris</td>
-			</tr>
-			<tr>
-				<td>1,010</td>
-				<td>massa</td>
-				<td>Vestibulum</td>
-				<td>lacinia</td>
-				<td>arcu</td>
-			</tr>
-			<tr>
-				<td>1,011</td>
-				<td>eget</td>
-				<td>nulla</td>
-				<td>Class</td>
-				<td>aptent</td>
-			</tr>
-			<tr>
-				<td>1,012</td>
-				<td>taciti</td>
-				<td>sociosqu</td>
-				<td>ad</td>
-				<td>litora</td>
-			</tr>
-			<tr>
-				<td>1,013</td>
-				<td>torquent</td>
-				<td>per</td>
-				<td>conubia</td>
-				<td>nostra</td>
-			</tr>
-			<tr>
-				<td>1,014</td>
-				<td>per</td>
-				<td>inceptos</td>
-				<td>himenaeos</td>
-				<td>Curabitur</td>
-			</tr>
-			<tr>
-				<td>1,015</td>
-				<td>sodales</td>
-				<td>ligula</td>
-				<td>in</td>
-				<td>libero</td>
-			</tr>
-			</tbody>
-		</table>
+	<div class="col-sm-6">
+		<h2 class="sub-header">New Surveys</h2>
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+				<tr>
+					<th>Title</th>
+					<th>Description</th>
+					<th>Type</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for survey in tables.surveys | slice(0,5) %}
+					<tr>
+						<td>{{ survey.title }}</td>
+						<td>{{ survey.description[:100] }}</td>
+						<td>{{ survey.surveyType.name }}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<h2 class="sub-header">New Sessions</h2>
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+				<tr>
+					<th>Title</th>
+					<th>Survey</th>
+					<th>Questions</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for session in tables.sessions | slice(0,5) %}
+					<tr>
+						<td>{{ session.name }}</td>
+						<td>{{ session.survey.title }}</td>
+						<td>{{ session.questions.count }}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
 	</div>
 {%  endblock content %}
