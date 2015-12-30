@@ -1,0 +1,13 @@
+{% extends 'SurveyBundle::base_logged.html.twig' %}
+
+{% block content %}
+	<h1>Your Profile</h1><br>
+	{% if app.request.get('se') == 1%}
+		<div class="alert alert-danger" role="alert" style="font-weight: bold;">Wrong password!</div>
+	{% endif %}
+	{% if app.request.get('ss') == 1%}
+		<div class="alert alert-success" role="alert" style="font-weight: bold;">Changes saved!</div>
+	{% endif %}
+	{{ form_start(form) }}
+	{{ form_end(form) }}
+{%  endblock content %}

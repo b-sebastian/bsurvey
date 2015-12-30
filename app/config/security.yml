@@ -37,3 +37,4 @@ security:
         - { path: ^/results, role: ROLE_USER }
         - { path: ^/session/show/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/session, role: ROLE_USER }
+        - { path: ^/profile, role: ROLE_USER }

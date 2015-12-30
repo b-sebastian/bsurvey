@@ -22,7 +22,7 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li>
 						{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-							<span class="logged-info logged">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
+							<span class="logged-info logged">Logged in as <a href="{{ path('profile_edit') }}">{{ app.user.forename }}</a></span>
 							<a id="logout" href="{{ path('fos_user_security_logout') }}">
 								<button type="submit" class="btn btn-primary">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</button>
 							</a>
@@ -52,7 +52,6 @@
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
 					<li {% block li_overview %}{% endblock %}><a href="{{ path('overview') }}">Overview<br></a></li>
-					<li {% block li_friends %}{% endblock %}><a href="{{ path('overview') }}">Friends</a></li>
 					<li {% block li_results %}{% endblock %}><a href="{{ path('results') }}">Results</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">

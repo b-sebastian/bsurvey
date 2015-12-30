@@ -67,9 +67,9 @@ class Version20151021174503 extends AbstractMigration implements ContainerAwareI
 			array(
 				'name' => 'Link',
 				'description' => 'Access to this survey will have only peoples with link to it.'),
-			array(
-				'name' => 'Friends',
-				'description' => 'Access to this survey will have only users selected from your friend list.')
+//			array(
+//				'name' => 'Friends',
+//				'description' => 'Access to this survey will have only users selected from your friend list.')
 		);
 	}
 
