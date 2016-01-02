@@ -39,7 +39,7 @@ class LoggedController extends Controller
 			->getQuery()->getResult();
 
 		$thumbs = array(
-			'last_answer' => $last_answer[0],
+			'last_answer' => isset($last_answer[0]) ? $last_answer[0] : null,
 			'survey_count' => count($surveys),
 			'session_count' => count($sessions)
 		);

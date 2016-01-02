@@ -1,0 +1,64 @@
+{% extends 'SurveyBundle::base_admin.html.twig' %}
+
+{% block page_css %}
+	{% stylesheets
+	'@SurveyBundle/Resources/css/dataTables.bootstrap.min.css' '@SurveyBundle/Resources/css/results.less'
+	%}
+	<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+	{% endstylesheets %}
+{% endblock page_css %}
+
+{% block li_results %}
+	class="active"
+{% endblock li_results %}
+
+{% block content %}
+	<h2>Results of {{ session.name }}</h2>
+
+	{% for id in charts|keys %}
+		<div class="question-blocks"><div id="{{ id }}" style="min-width: 400px; height: 300px; margin: 0 auto; max-width: 70%;"></div></div>
+	{% endfor %}
+
+	{% for id, question in texts %}
+		<div class="question-blocks">
+			<div class="text-title">{{ question.title }}</div>
+			<table id="{{ id }}" class="table table-striped table-bordered" cellspacing="0" width="100%">
+				<thead>
+				<tr>
+					<th>Answers</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for answer in question.answers %}
+					{% if answer.session.id == session.id %}
+						<tr>
+							<td>{{ answer.answer }}</td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	{% endfor %}
+
+	{% block foot_script_assetic %}
+		{% javascripts '@SurveyBundle/Resources/jquery-1.11.1.js' '@SurveyBundle/Resources/js/modal.js' '@SurveyBundle/Resources/js/jquery.dataTables.min.js' '@SurveyBundle/Resources/js/dataTables.bootstrap.min.js' '@SurveyBundle/Resources/js/highcharts.js' '@SurveyBundle/Resources/js/exporting.js' %}
+			<script type="text/javascript" src="{{ asset_url }}"></script>
+		{% endjavascripts %}
+		<script type="text/javascript">
+			$(document).ready(function() {
+				{% for id, qchart in charts %}
+					{{ chart(qchart) }}
+				{% endfor %}
+
+				{% for id in texts|keys %}
+					$('#'+ '{{ id }}').DataTable({
+						"columns" : [
+							null
+						]
+					});
+				{% endfor %}
+			} );
+		</script>
+	{% endblock foot_script_assetic %}
+{%  endblock content %}

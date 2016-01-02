@@ -48,19 +48,13 @@
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
-					<li {% block li_overview %}{% endblock %}><a href="{{ path('overview') }}">Overview<br></a></li>
-					<li {% block li_results %}{% endblock %}><a href="{{ path('results') }}">Results</a></li>
+					<li {% block li_overview %}{% endblock %}><a href="{{ path('overview') }}">Back to Surveys<br></a></li>
+					<li {% block li_dashboard %}{% endblock %}><a href="{{ path('admin_dashboard') }}">Dashboard<br></a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li {% block li_survey %}{% endblock %}><a href="{{ path('surveys') }}">My surveys</a></li>
-					<li {% block li_survey_add %}{% endblock %}><a href="{{ path('survey_add') }}">Add survey</a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li {% block li_questions %}{% endblock %}><a href="{{ path('questions') }}">My questions</a></li>
-					<li {% block li_questions_add %}{% endblock %}><a href="{{ path('question_add') }}">Add question</a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li {% block li_admin %}{% endblock %}><a href="{{ path('admin_dashboard') }}">Administrator Panel</a></li>
+					<li {% block li_admin_surveys %}{% endblock %}><a href="{{ path('admin_surveys') }}">Surveys</a></li>
+					<li {% block li_admin_questions %}{% endblock %}><a href="{{ path('admin_questions') }}">Questions</a></li>
+					<li {% block li_admin_sessions %}{% endblock %}><a href="{{ path('admin_sessions') }}">Sessions</a></li>
 				</ul>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

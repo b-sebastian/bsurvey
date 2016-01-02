@@ -1,0 +1,14 @@
+{% extends 'SurveyBundle::base_admin.html.twig' %}
+
+{% block li_questions_add %}
+	class="active"
+{% endblock li_questions_add %}
+
+{% block content %}
+	{% if app.request.get('ss') == 1%}
+		<div class="alert alert-success" role="alert" style="font-weight: bold;">Question has been added</div>
+	{% endif %}
+	{{ form_start(form) }}
+	{{ form_widget(form) }}
+	{{ form_end(form) }}
+{%  endblock content %}

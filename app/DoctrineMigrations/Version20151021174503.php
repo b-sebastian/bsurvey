@@ -125,13 +125,13 @@ class Version20151021174503 extends AbstractMigration implements ContainerAwareI
 				'leftLabel' => 'Female',
 				'rightLabel' => 'Male'
 			),
-			array(
-				'type' => 'checkbox',
-				'size' => '3',
-				'title' => 'CheckBoxes',
-				'leftLabel' => '',
-				'rightLabel' => ''
-			)
+//			array(
+//				'type' => 'checkbox',
+//				'size' => '3',
+//				'title' => 'CheckBoxes',
+//				'leftLabel' => '',
+//				'rightLabel' => ''
+//			)
 		);
 	}
 }
